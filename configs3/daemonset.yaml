@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Daemonset
+metadata: 
+    name: website-daemonset
+    labels:
+        web: website
+spec: 
+    selector: 
+        matchLabels: 
+            web: website
+    template:
+        metadata: 
+              labels:
+                  web: website
+        spec:
+              containers: 
+                - name: website-d-pod
+                  image: ubuntu/apache2
+                  ports: 
+                  - containerPort: 8080

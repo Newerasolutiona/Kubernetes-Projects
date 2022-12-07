@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1                   
+kind: Ingress
+metadata:
+    name: nginx-ingress
+    namespace: default
+spec: 
+    tls: 
+      hosts:
+         - amazon.com
+         - drive.google.com
+      secretName: tls-secret
+    rules: 
+        - host: amazon.com
+          http: 
+              paths: 
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service: 
+                            name: my-home-service
+                            port: 
+                                number: 3000
+                  - path: /gift-cards
+                    pathType: Prefix
+                    backend:
+                        service: 
+                            name: my-compute-service
+                            port: 
+                                number: 3000
+
+        - host: drive.google.com
+          http: 
+              paths: 
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service: 
+                            name: my-drive-service
+                            port: 
+                                number: 3000
+        

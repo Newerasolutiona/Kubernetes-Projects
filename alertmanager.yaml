@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata: 
+  name: slack-alert-config
+  namespace: default
+spec: 
+    route: 
+        receiver: slack-alert
+    receivers:
+        - name: slack-alert
+          slackConfigs: 
+            - apiURL: 
+                  name: slack-alert-secret
+                  key: api-url
+              channel: "#test-project"

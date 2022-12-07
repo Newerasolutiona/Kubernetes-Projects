@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: apache-dep
+    labels:
+        app: apache
+spec: 
+    replicas: 1
+    selector: 
+        matchLabels: 
+            app: apache
+    template:
+        metadata: 
+              labels:
+                  app: apache
+        spec:
+              containers: 
+                - name: apache-pod
+                  image: ubuntu/apache2
+                  ports: 
+                  - containerPort: 8080
+              affinity:
+                nodeAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 1
+                      preference:
+                          matchExpressions:
+                            - key: nodeLabel
+                              values: 
+                                - node-6
+                              operator: In
+                    - weight: 2
+                      preference:
+                         matchExpressions:
+                          - key: nodeLabel
+                            values: 
+                              - node-5
+                            operator: DoesNotExist

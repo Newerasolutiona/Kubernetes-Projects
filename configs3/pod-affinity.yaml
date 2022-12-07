@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: apache-dep-pod-affinity
+    labels:
+        app: apache2
+spec: 
+    replicas: 3
+    selector: 
+        matchLabels: 
+            app: apache2
+    template:
+        metadata: 
+              labels:
+                  app: apache2
+        spec:
+              containers: 
+                - name: apache-pod
+                  image: ubuntu/apache2
+                  ports: 
+                  - containerPort: 8080
+              affinity:
+                podAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                          - labelSelector:
+                              matchExpressions:
+                                    - key: app
+                                      values:
+                                        - apache2
+                                      operator: In
+                            topologyKey: beta.kubernetes.io/arch

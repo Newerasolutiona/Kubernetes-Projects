@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: website-deployment
+    labels:
+        web: website
+spec: 
+    replicas: 4
+    selector: 
+        matchLabels: 
+            web: website
+    template:
+        metadata: 
+              labels:
+                  web: website
+        spec:
+              containers: 
+                - name: website-pod
+                  image: ubuntu/apache2
+                  ports: 
+                  - containerPort: 8080
+              tolerations: 
+                - key: disktype
+                  effect: NoSchedule
+                  operator: Equal
+                  value: ssd

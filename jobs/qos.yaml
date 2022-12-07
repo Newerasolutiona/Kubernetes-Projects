@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: qos-deployment
+    labels:
+        app: qos
+spec: 
+    replicas: 1
+    selector: 
+        matchLabels: 
+            app: qos
+    template:
+        metadata: 
+              labels:
+                  app: qos
+        spec:
+              containers: 
+                - name: qos-pod
+                  image: ubuntu/apache2
+                  ports: 
+                  - containerPort: 8080
+                  resources:
+                      requests:
+                          cpu: 100m
+                          memory: 500Mi

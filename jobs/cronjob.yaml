@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+        name: cron-job
+spec: 
+        schedule: "* * * * *"
+        jobTemplate:
+                spec: 
+                    template:   
+                            spec: 
+                                containers:
+                                    - image: busybox
+                                      name: simple-cron-job
+                                      command: 
+                                       - echo
+                                       - This is a CronJob
+                                restartPolicy: Never
